@@ -10,7 +10,9 @@ class LoginPage(BasePage):
     SUCCESS_MESSAGE = (By.ID, "flash")
     
     def login(self, username, password):
+        self.driver.find_element(*self.USERNAME).clear()
         self.driver.find_element(*self.USERNAME).send_keys(username)
+        self.driver.find_element(*self.PASSWORD).clear()
         self.driver.find_element(*self.PASSWORD).send_keys(password)
         self.driver.find_element(*self.LOGIN_BUTTON).click()
         
@@ -19,4 +21,7 @@ class LoginPage(BasePage):
     
     def is_message_displayed(self):
         return self.driver.find_element(*self.SUCCESS_MESSAGE).is_displayed()
+    
+    def get_flash_message(self):
+        return self.driver.find_element(*self.SUCCESS_MESSAGE).text
     

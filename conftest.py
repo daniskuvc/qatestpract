@@ -1,4 +1,5 @@
 import pytest
+from config.settings import DEBUG
 from core.driver_factory import get_driver
 
 
@@ -6,4 +7,5 @@ from core.driver_factory import get_driver
 def driver():
     driver = get_driver()
     yield driver
-    driver.quit()
+    if DEBUG:
+        driver.quit()

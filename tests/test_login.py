@@ -1,16 +1,17 @@
+import pytest
 from config.settings import TEST_USERNAME, TEST_PASSWORD, DEBUG, TEST_URL
-from core.driver_factory import get_driver
 from pages.login_page import LoginPage
 
+@pytest.mark.parametrize("username, password, expected_message", [
+    (TEST_USERNAME, TEST_PASSWORD, "You logged into a secure area!"),
+    ("invalid_user", "invalid_pass", "Your username is invalid!"),
+])
 
-def test_valid_login(driver):
+def test_login(driver, username, password, expected_message):
     login_page = LoginPage(driver)
     login_page.open(url=TEST_URL)
-    login_page.login(username=TEST_USERNAME, password=TEST_PASSWORD)
+    login_page.login(username=username, password=password)
     
-    # assert login_page.is_login_successful(), "Login should be successful with valid credentials"
-    assert login_page.is_message_displayed(), "Success message should be displayed after login"
-    
-    if not DEBUG:
-        driver.quit()
-    
+    message = login_page.get_flash_message()
+    assert expected_message in message, f"Expected message '{expected_message}' but got '{message}'"
+        
