@@ -14,6 +14,7 @@ test_data = [
 
 def test_login(driver, username, password, expected_message):
     login_page = LoginPage(driver)
+    login_page.wait_until_page_loaded()
     login_page.open(url=TEST_URL)
     login_page.login(username=username, password=password)
     
