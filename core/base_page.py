@@ -6,7 +6,7 @@ class BasePage:
 
     def __init__(self, driver):
         self.driver = driver
-        self.wait = WebDriverWait(driver, 10)
+        self.wait = WebDriverWait(driver, 20)
 
     def open(self, url):
         self.driver.get(url)
@@ -19,3 +19,6 @@ class BasePage:
     
     def wait_for_clickable(self, locator):
         return self.wait.until(EC.element_to_be_clickable(locator))
+    
+    def wait_until_page_loaded(self):
+        self.wait.until(lambda d: d.execute_script('return document.readyState') == 'complete')

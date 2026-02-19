@@ -21,4 +21,3 @@ class LoginPage(BasePage):
     
     def get_flash_message(self):
         return self.wait_for_element_visible(self.SUCCESS_MESSAGE).text
-    
